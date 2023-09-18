@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  cardealerappserver:
+    image: ${DOCKER_REGISTRY-}cardealerappserver
+    build:
+      context: .
+      dockerfile: CarDealerAppServer/Dockerfile
+    ports:
+     - 8080:80
