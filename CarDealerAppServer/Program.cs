@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +16,13 @@ builder.Services.AddCors(policy =>
         .AllowAnyOrigin()
         .AllowAnyHeader()
         .AllowAnyMethod());
+});
+
+builder.Services.AddApiVersioning(config =>
+{
+    config.DefaultApiVersion = new ApiVersion(1, 0);
+    config.AssumeDefaultVersionWhenUnspecified = true;
+    config.ReportApiVersions = true;
 });
 
 var app = builder.Build();
