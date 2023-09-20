@@ -45,9 +45,9 @@ namespace CarDealerAppServer.Infrastructure.Mongo.Repositories
             return await _carCollection.Find(x => x.CarId == carId).FirstOrDefaultAsync();
         }
 
-        public async Task<Car> GetCarByNameAsync(string name)
+        public async Task<List<Car>> GetCarsByNameAsync(string name)
         {
-            return await _carCollection.Find(x => x.CarName == name).FirstOrDefaultAsync();
+            return await _carCollection.Find(x => x.CarName == name).ToListAsync();
         }
 
         public async Task<List<Car>> GetCarsAsync()
