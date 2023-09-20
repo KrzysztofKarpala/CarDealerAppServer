@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealerAppServer.Dto
+namespace CarDealerAppServer.Application.Dto
 {
     public class CarDto
     {
