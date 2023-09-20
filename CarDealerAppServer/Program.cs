@@ -1,8 +1,48 @@
+using CarDealerAppServer.Api.Extensions;
+using CarDealerAppServer.Application.Queries;
+using CarDealerAppServer.Core.Repository;
+using CarDealerAppServer.Infrastructure.Mongo.DbSettings;
+using CarDealerAppServer.Infrastructure.Mongo.Repositories;
+using CarDealerAppServer.Shared;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+
+var root = Directory.GetCurrentDirectory();
+var dotEnd = Path.Combine(root, ".env");
+DotEnv.Load(dotEnd);
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+#pragma warning disable CS0618
+BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
+#pragma warning restore CS0618
+BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+
+builder.Services.Configure<CarDatabaseSettings>(builder.Configuration.GetSection("Mongo"));
+builder.Services.AddTransient<ICarRepository, CarRepository>();
+
+builder.Services.AddMassTransit(busConfigurator =>
+{
+    busConfigurator.SetDefaultEndpointNameFormatter();
+    busConfigurator.UsingRabbitMq((IBusRegistrationContext context, IRabbitMqBusFactoryConfigurator configurator) =>
+    {
+        var configSection = builder.Configuration.GetSection("RabbitMqSettings");
+        var settings = new RabbitMqSettings();
+        configSection.Bind(settings);
+        configurator.Host(settings.HostName, h =>
+        {
+            h.Username(settings.UserName);
+            h.Password(settings.Password);
+        });
+        configurator.ConfigureEndpoints(context);
+    });
+});
+
+builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<GetCarsQuery>());
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

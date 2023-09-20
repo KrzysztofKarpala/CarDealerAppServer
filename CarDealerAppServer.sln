@@ -3,9 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealerAppServer", "CarDealerAppServer\CarDealerAppServer.csproj", "{49A83EE0-DBFE-4D14-99DD-4467521FF4F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarDealerAppServer.Api", "CarDealerAppServer\CarDealerAppServer.Api.csproj", "{49A83EE0-DBFE-4D14-99DD-4467521FF4F9}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{43022D06-0FA2-4AAC-8D39-D1301DD79B1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarDealerAppServer.Core", "CarDealerAppServer.Core\CarDealerAppServer.Core.csproj", "{6A33F6FD-C41F-401A-AB51-5BC9D330225C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarDealerAppServer.Application", "CarDealerAppServer.Application\CarDealerAppServer.Application.csproj", "{3FBB6650-19BB-4B50-81AC-AF87798CC518}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarDealerAppServer.Infrastructure", "CarDealerAppServer.Infrastructure\CarDealerAppServer.Infrastructure.csproj", "{35E40DCC-1FA4-44C7-8BF9-BDF337176A91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarDealerAppServer.Shared", "CarDealerAppServer.Shared\CarDealerAppServer.Shared.csproj", "{F29B5ED4-AA6B-40ED-80A6-19B7FC59F584}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +29,22 @@ Global
 		{43022D06-0FA2-4AAC-8D39-D1301DD79B1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43022D06-0FA2-4AAC-8D39-D1301DD79B1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43022D06-0FA2-4AAC-8D39-D1301DD79B1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A33F6FD-C41F-401A-AB51-5BC9D330225C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A33F6FD-C41F-401A-AB51-5BC9D330225C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A33F6FD-C41F-401A-AB51-5BC9D330225C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A33F6FD-C41F-401A-AB51-5BC9D330225C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FBB6650-19BB-4B50-81AC-AF87798CC518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FBB6650-19BB-4B50-81AC-AF87798CC518}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FBB6650-19BB-4B50-81AC-AF87798CC518}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FBB6650-19BB-4B50-81AC-AF87798CC518}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35E40DCC-1FA4-44C7-8BF9-BDF337176A91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35E40DCC-1FA4-44C7-8BF9-BDF337176A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35E40DCC-1FA4-44C7-8BF9-BDF337176A91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35E40DCC-1FA4-44C7-8BF9-BDF337176A91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F29B5ED4-AA6B-40ED-80A6-19B7FC59F584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F29B5ED4-AA6B-40ED-80A6-19B7FC59F584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F29B5ED4-AA6B-40ED-80A6-19B7FC59F584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F29B5ED4-AA6B-40ED-80A6-19B7FC59F584}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
