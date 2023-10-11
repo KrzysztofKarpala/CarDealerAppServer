@@ -1,6 +1,6 @@
 ﻿using CarDealerAppServer.Core.Entity;
 using CarDealerAppServer.Core.Repository;
-using CarDealerAppServer.Infrastructure.Mongo.DbSettings;
+using CarDealerAppServer.Infrastructure.DbSettings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace CarDealerAppServer.Infrastructure.Mongo.Repositories
+namespace CarDealerAppServer.Infrastructure.Repositories
 {
     public class CarRepository : ICarRepository
     {

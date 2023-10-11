@@ -12,7 +12,14 @@ namespace CarDealerAppServer.Shared
     {
         [BsonIgnoreIfDefault]
         public ObjectId Id { get; set; }
+        public int Version { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ModificationDate { get; set; }
+        protected void IncrementVersion()
+        {
+            Version++;
+        }
+        protected void SetCreationDate() => CreationDate = DateTime.UtcNow;
+        protected void SetModificationDate() => ModificationDate = DateTime.UtcNow;
     }
 }
