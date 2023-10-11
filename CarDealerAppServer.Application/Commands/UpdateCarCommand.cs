@@ -1,4 +1,5 @@
-﻿using CarDealerAppServer.Core.Entity;
+﻿using CarDealerAppServer.Application.Dto;
+using CarDealerAppServer.Core.Entity;
 using CarDealerAppServer.Core.Repository;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -10,20 +11,20 @@ using System.Threading.Tasks;
 
 namespace CarDealerAppServer.Application.Commands
 {
-    public record DeleteCarByIdCommand(Guid CarId) : IRequest
+    public record UpdateCarCommand(Guid CarId, CarDto CarDto) : IRequest
     {
     }
 
-    public class DeleteCarByIdCommandHandler : IRequestHandler<DeleteCarByIdCommand>
+    public class UpdateCarCommandHandler : IRequestHandler<UpdateCarCommand>
     {
-        private readonly ILogger<DeleteCarByIdCommandHandler> _logger;
+        private readonly ILogger<UpdateCarCommandHandler> _logger;
         private readonly ICarRepository _carRepository;
-        public DeleteCarByIdCommandHandler(ILogger<DeleteCarByIdCommandHandler> logger, ICarRepository carRepository)
+        public UpdateCarCommandHandler(ILogger<UpdateCarCommandHandler> logger, ICarRepository carRepository)
         {
             _logger = logger;
             _carRepository = carRepository;
         }
-        public async Task Handle(DeleteCarByIdCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateCarCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -32,16 +33,17 @@ namespace CarDealerAppServer.Application.Commands
                 {
                     throw new FileNotFoundException($"Car with Id: {request.CarId} does not exist.");
                 }
-                await _carRepository.DeleteCarByIdAsync(request.CarId);
+                car.UpdateCar(request.CarDto.CarName, request.CarDto.CarDescription, request.CarDto.CarImage);
+                await _carRepository.AddOrReplaceCarAsync(car);
             }
-            catch (FileNotFoundException ex)
+            catch (ArgumentException ex)
             {
-                _logger.LogWarning(404, ex, ex.Message);
+                _logger.LogWarning(400, ex, ex.Message);
                 throw ex;
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(500, ex, "DeleteCarByIdCommandHandler failed.");
+                _logger.LogWarning(500, ex, "UpdateCarCommandHandler failed.");
                 throw ex;
             }
         }

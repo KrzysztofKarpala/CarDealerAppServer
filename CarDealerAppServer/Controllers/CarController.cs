@@ -95,8 +95,32 @@ namespace CarDealerAppServer.Api.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-        }    
-        
+        }
+
+        [HttpPut("updatecar")]
+        public async Task<ActionResult> UpdateCar(Guid carId, CarDto carDto)
+        {
+            try
+            {
+                var updateCarCommand = new UpdateCarCommand(carId, carDto);
+                await _mediator.Send(updateCarCommand);
+                _logger.LogInformation(200, $"Updated Car with id: {carId}.");
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }
+            catch (FileNotFoundException ex)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpDelete("deletecar")]
         public async Task<ActionResult> DeleteCar(Guid carId)
         {

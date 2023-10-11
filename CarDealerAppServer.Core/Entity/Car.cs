@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,7 +37,31 @@ namespace CarDealerAppServer.Core.Entity
                 throw new ArgumentException("Car Image can not be empty.");
             }
             var car = new Car(Guid.NewGuid(), carName, carDescritpion, carImage);
+            car.SetCreationDate();
+            car.SetModificationDate();
+            car.IncrementVersion();
             return car;
+        }
+
+        public void UpdateCar(string carName, string carDescritpion, string carImage)
+        {
+            if (string.IsNullOrWhiteSpace(carName))
+            {
+                throw new ArgumentException("Car Name can not be empty.");
+            }
+            if (string.IsNullOrWhiteSpace(carDescritpion))
+            {
+                throw new ArgumentException("Car Description can not be empty.");
+            }
+            if (string.IsNullOrWhiteSpace(carImage))
+            {
+                throw new ArgumentException("Car Image can not be empty.");
+            }
+            CarName = carName;
+            CarDescription = carDescritpion;
+            CarImage = carImage;
+            SetModificationDate();
+            IncrementVersion();
         }
     }
 }

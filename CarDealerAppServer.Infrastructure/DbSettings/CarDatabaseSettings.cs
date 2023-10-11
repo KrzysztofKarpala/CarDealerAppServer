@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealerAppServer.Infrastructure.Mongo.DbSettings
+namespace CarDealerAppServer.Infrastructure.DbSettings
 {
     public class CarDatabaseSettings
     {

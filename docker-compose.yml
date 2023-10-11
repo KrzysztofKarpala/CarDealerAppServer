@@ -42,6 +42,19 @@ services:
       dockerfile: CarDealerAppServer/Dockerfile
     ports:
      - 8080:80
+
+  redis:
+    container_name: redis
+    image: redis/redis-stack:7.0.6-RC4
+    restart: unless-stopped
+    ports:
+     - 6379:6379
+     - 8001:8001
+    volumes:
+     - cache:/data
+
 volumes:
+  cache:
+   driver: local
   db_data:
    driver: local

@@ -1,14 +1,16 @@
 using CarDealerAppServer.Api.Extensions;
+using CarDealerAppServer.Application.Consumers;
 using CarDealerAppServer.Application.Queries;
 using CarDealerAppServer.Core.Repository;
-using CarDealerAppServer.Infrastructure.Mongo.DbSettings;
-using CarDealerAppServer.Infrastructure.Mongo.Repositories;
+using CarDealerAppServer.Infrastructure.DbSettings;
+using CarDealerAppServer.Infrastructure.Repositories;
 using CarDealerAppServer.Shared;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
+using StackExchange.Redis;
 
 var root = Directory.GetCurrentDirectory();
 var dotEnd = Path.Combine(root, ".env");
@@ -24,10 +26,18 @@ BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard
 
 builder.Services.Configure<CarDatabaseSettings>(builder.Configuration.GetSection("Mongo"));
 builder.Services.AddTransient<ICarRepository, CarRepository>();
+builder.Services.AddTransient<ICacheService, CacheService>();
+
+// Add redis
+var conn = builder.Configuration.GetConnectionString("Redis");
+builder.Services.AddSingleton<IConnectionMultiplexer>(options =>
+    ConnectionMultiplexer.Connect(conn));
+
 
 builder.Services.AddMassTransit(busConfigurator =>
 {
     busConfigurator.SetDefaultEndpointNameFormatter();
+    busConfigurator.AddConsumer<AddCarToCacheConsumer>();
     busConfigurator.UsingRabbitMq((IBusRegistrationContext context, IRabbitMqBusFactoryConfigurator configurator) =>
     {
         var configSection = builder.Configuration.GetSection("RabbitMqSettings");

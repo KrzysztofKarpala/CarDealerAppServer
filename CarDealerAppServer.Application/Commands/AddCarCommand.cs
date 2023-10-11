@@ -19,10 +19,12 @@ namespace CarDealerAppServer.Application.Commands
     {
         private readonly ILogger<AddCarCommandHandler> _logger;
         private readonly ICarRepository _carRepository;
-        public AddCarCommandHandler(ILogger<AddCarCommandHandler> logger, ICarRepository carRepository)
+        private readonly ICacheService _cacheService;
+        public AddCarCommandHandler(ILogger<AddCarCommandHandler> logger, ICarRepository carRepository, ICacheService cacheService)
         {
             _logger = logger;
             _carRepository = carRepository;
+            _cacheService = cacheService;
         }
         public async Task Handle(AddCarCommand request, CancellationToken cancellationToken)
         {
@@ -34,6 +36,11 @@ namespace CarDealerAppServer.Application.Commands
             catch(ArgumentException ex)
             {
                 _logger.LogWarning(400, ex, ex.Message);
+                throw ex;
+            }
+            catch (FileNotFoundException ex)
+            {
+                _logger.LogWarning(404, ex, ex.Message);
                 throw ex;
             }
             catch (Exception ex)
